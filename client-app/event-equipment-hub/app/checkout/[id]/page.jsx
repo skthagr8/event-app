@@ -25,25 +25,28 @@ export default function CheckoutPage() {
   const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-          const parsedUser = JSON.parse(storedUser);
-          if (parsedUser?.id) {
-            setUser(parsedUser);
-          } else {
-            toast.error('Invalid user session.');
-          }
+  if (typeof window !== 'undefined') {
+    try {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        if (parsedUser?.id) {
+          setUser(parsedUser);
+          setEmail(parsedUser.email || ''); // Auto-fill email
+          setFullName(parsedUser.name || ''); // Optional: Auto-fill name
         } else {
-          toast.error('User not logged in.');
+          toast.error('Invalid user session.');
         }
-      } catch (err) {
-        console.error('Failed to parse user:', err);
-        toast.error('Error retrieving user session.');
+      } else {
+        toast.error('User not logged in.');
       }
+    } catch (err) {
+      console.error('Failed to parse user:', err);
+      toast.error('Error retrieving user session.');
     }
-  }, []);
+  }
+}, []);
+
 
   useEffect(() => {
     const fetchEquipment = async () => {

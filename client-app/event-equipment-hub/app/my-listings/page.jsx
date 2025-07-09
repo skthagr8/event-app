@@ -52,7 +52,6 @@ export default function MyListingsPage() {
     }
   };
 
-  const handleEdit = (item) => setEditingItem(item);
   const closeModal = () => setEditingItem(null);
 
   const handleSave = async () => {
@@ -88,14 +87,6 @@ export default function MyListingsPage() {
           value={filters.keyword}
           onChange={(e) => setFilters({ ...filters, keyword: e.target.value })}
         />
-        <select
-          className="border p-2 rounded"
-          value={filters.sortBy}
-          onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
-        >
-          <option value="latest">Sort by Latest</option>
-          <option value="price">Sort by Price</option>
-        </select>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -112,10 +103,6 @@ export default function MyListingsPage() {
               <p className="text-sm">Quantity: {item.quantity}</p>
               <div className="flex gap-2 mt-3">
                 <button
-                  onClick={() => handleEdit(item)}
-                  className="bg-yellow-500 text-white px-3 py-1 rounded"
-                >Edit</button>
-                <button
                   onClick={() => handleDelete(item.id)}
                   className="bg-red-600 text-white px-3 py-1 rounded"
                 >Delete</button>
@@ -125,40 +112,6 @@ export default function MyListingsPage() {
         ))}
       </div>
 
-      {editingItem && (
-        <Modal
-          isOpen={true}
-          onRequestClose={closeModal}
-          contentLabel="Edit Listing"
-          className="bg-white p-6 rounded-lg max-w-lg mx-auto mt-20 border"
-        >
-          <h2 className="text-xl font-bold mb-4">Edit Listing</h2>
-          <label className="block mb-2">Name</label>
-          <input
-            value={editingItem.name}
-            onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
-            className="border p-2 rounded w-full mb-3"
-          />
-          <label className="block mb-2">Price per Day</label>
-          <input
-            type="number"
-            value={editingItem.price_per_day}
-            onChange={(e) => setEditingItem({ ...editingItem, price_per_day: e.target.value })}
-            className="border p-2 rounded w-full mb-3"
-          />
-          <label className="block mb-2">Quantity</label>
-          <input
-            type="number"
-            value={editingItem.quantity}
-            onChange={(e) => setEditingItem({ ...editingItem, quantity: e.target.value })}
-            className="border p-2 rounded w-full mb-3"
-          />
-          <div className="flex gap-4 mt-4">
-            <button onClick={handleSave} className="bg-green-600 text-white px-4 py-2 rounded">Save</button>
-            <button onClick={closeModal} className="bg-gray-400 text-white px-4 py-2 rounded">Cancel</button>
-          </div>
-        </Modal>
-      )}
     </div>
   );
 }

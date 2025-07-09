@@ -33,7 +33,7 @@ export default function MyNavbar() {
   return (
     <Navbar bg="light" className={`${Phudu.className} px-4`} expand="lg">
       <Navbar.Brand href="/listings" className="ms-3" style={{ fontWeight: 700 }}>
-        EVENTORY
+        EVENT HUB
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -72,13 +72,6 @@ export default function MyNavbar() {
             className="me-2"
           >
             SELL
-          </Button>
-          <Button
-            href="/listings"
-            style={{ backgroundColor: '#48392A', border: 'none' }}
-            className="me-3"
-          >
-            HIRE
           </Button>
           <Button variant="outline-danger" style={{ backgroundColor: '#48392A', border: 'none'}} onClick={handleLogout}>
             Logout

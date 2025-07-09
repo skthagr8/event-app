@@ -1,18 +1,28 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
-export default function FilterSidebar({ filters, setFilters }) {
+export default function FilterSidebar({ filters, setFilters}) {
+
+
+  // Handle input changes
   const handleChange = (e) => {
-    setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFilters((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
+  // Handle condition checkbox toggles
   const handleCheckbox = (e) => {
     setFilters((prev) => ({
       ...prev,
       condition: {
         ...prev.condition,
         [e.target.name]: e.target.checked,
-      },
+      }
     }));
   };
 
@@ -20,16 +30,7 @@ export default function FilterSidebar({ filters, setFilters }) {
     <div className="p-3 bg-light rounded shadow-sm">
       <h5>Filter Equipment</h5>
 
-      <Form.Group controlId="categorySelect" className="mb-3">
-        <Form.Label>Category</Form.Label>
-        <Form.Select name="category" value={filters.category} onChange={handleChange}>
-          <option value="">All</option>
-          <option value="Audio">Audio</option>
-          <option value="Lighting">Lighting</option>
-          <option value="Staging">Staging</option>
-        </Form.Select>
-      </Form.Group>
-
+      {/* Max Price Slider */}
       <Form.Group controlId="priceRange" className="mb-3">
         <Form.Label>Max Price (KES): {filters.maxPrice}</Form.Label>
         <Form.Range
@@ -42,6 +43,7 @@ export default function FilterSidebar({ filters, setFilters }) {
         />
       </Form.Group>
 
+      {/* Condition Checkboxes */}
       <Form.Group className="mb-3">
         <Form.Label>Condition</Form.Label>
         <Form.Check

@@ -29,49 +29,50 @@ function ListingsPage() {
   });
 
   useEffect(() => {
-    async function fetchEquipment() {
-      const token = localStorage.getItem('accessToken');
-     
-      try {
-        const res = await fetch('http://localhost:8000/api/equipment/', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        });
+  async function fetchFilteredEquipment() {
+    const token = localStorage.getItem('accessToken');
+    let url = `http://localhost:8000/api/equipment/`;
 
-        // Check if the response is ok (status 200-299)
-        if (!res.ok) {
-        throw new Error('Unauthorized or failed to fetch');
-       }
+    const query = [];
+    if (filters.category) query.push(`category=${filters.category}`);
+    if (filters.maxPrice) query.push(`max_price=${filters.maxPrice}`);
+    // You could also send condition filter in the future
+    if (query.length) url += `?${query.join('&')}`;
 
-        const data = await res.json();
+    try {
+      const res = await fetch(url, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
 
-        const equipment = data.map((item) => ({
-          id: item.id,
-          title: item.name,
-          price: Number(item.buying_price),
-          rent_per_day: Number(item.price_per_day),
-          condition: item.condition,
-          is_premium: item.is_premium,
-          quantity: Number(item.quantity),
-          is_available: item.is_available,
-          image_url: item.image,
-          category: item.category,
-          updated_at: item.updated_at,
-        }));
+      if (!res.ok) throw new Error('Unauthorized or failed to fetch');
+      const data = await res.json();
 
-        setEquipmentList(equipment);
-        setLoading(false);
-      } catch (error) {
-        console.error('Failed to fetch equipment:', error);
-      }
+      const equipment = data.map((item) => ({
+        id: item.id,
+        title: item.name,
+        price: Number(item.buying_price),
+        rent_per_day: Number(item.price_per_day),
+        condition: item.condition,
+        is_premium: item.is_premium,
+        quantity: Number(item.quantity),
+        is_available: item.is_available,
+        image_url: item.image,
+        category: item.category,
+        updated_at: item.updated_at,
+      }));
+
+      setEquipmentList(equipment);
+      setLoading(false);
+    } catch (error) {
+      console.error('Failed to fetch filtered equipment:', error);
     }
+  }
 
-    fetchEquipment();
-  }, []);
+  fetchFilteredEquipment();
+}, [filters]); // ← filters triggers new fetch
 
   const filteredList = equipmentList.filter((e) => {
-    const { keyword, category, maxPrice, condition, rentable, recent, budget } = filters;
+    const { keyword, category, maxPrice, condition} = filters;
 
     if (keyword && !e.title.toLowerCase().includes(keyword.toLowerCase())) return false;
     if (category && e.category !== category) return false;
@@ -81,10 +82,6 @@ function ListingsPage() {
       if (condition.New && e.condition !== 'Brand New') return false;
       if (condition.Used && e.condition !== 'Used') return false;
     }
-
-    if (rentable && !e.rent_per_day) return false;
-    if (recent && !e.updated_at) return false;
-    if (budget && e.price > 10000) return false;
 
     return true;
   });
@@ -123,28 +120,21 @@ function ListingsPage() {
 
             <div className="mt-4">
               <div className="d-flex justify-content-between align-items-center mb-2">
-                <h6 className="mb-0 fw-bold">Popular filters</h6>
                 <button
                   onClick={() =>
                     setFilters({
                       keyword: '',
                       category: '',
                       maxPrice: 30000,
-                      condition: { New: false, Used: false },
-                      rentable: false,
-                      recent: false,
-                      budget: false,
+                      condition: { New: false, Used: false }
                     })
                   }
                   className="btn btn-sm btn-link p-0 text-secondary"
                 >
-                  Reset
+                  
                 </button>
               </div>
               {[
-                { id: 'for rent', label: 'for rent', field: 'for rent' },
-                { id: 'recent', label: 'Recently Updated', field: 'recent' },
-                { id: 'budget', label: 'Budget', field: 'budget' },
               ].map(({ id, label, field }) => (
                 <div className="form-check" key={id}>
                   <input

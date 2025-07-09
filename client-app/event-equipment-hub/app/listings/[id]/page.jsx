@@ -19,6 +19,7 @@ function EquipmentDetailsPage() {
   const [equipment, setEquipment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const user = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : null;
 
   useEffect(() => {
     if (!id) return;
@@ -109,16 +110,19 @@ function EquipmentDetailsPage() {
                   <span className="badge bg-warning text-dark mt-3">Premium Listing</span>
                 )}
 
-                <div className="mt-4">
-                  <Link href={`/checkout/${id}`} passHref>
-                  <button className="btn btn-dark me-2" >Buy Now</button>
-                  </Link>
-                  <Link href={`/checkout/${id}`} passHref>
-                  {equipment.rent_per_day > 0 && (
-                    <button className="btn btn-outline-primary">Rent Now</button>
-                  )}
-                   </Link>
-                </div>
+                {user?.role !== 'vendor' && (
+  <div className="mt-4">
+    <Link href={`/checkout/${id}`} passHref>
+      <button className="btn btn-dark me-2">Buy Now</button>
+    </Link>
+    {equipment.rent_per_day > 0 && (
+      <Link href={`/checkout/${id}`} passHref>
+        <button className="btn btn-outline-primary">Rent Now</button>
+      </Link>
+    )}
+  </div>
+)}
+
               </div>
             </div>
             <CheckoutForm
