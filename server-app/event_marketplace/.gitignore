@@ -1,0 +1,13 @@
+# Local database
+db.sqlite3
+
+# User-uploaded media files
+media/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+.env
