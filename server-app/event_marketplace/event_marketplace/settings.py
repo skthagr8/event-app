@@ -91,7 +91,12 @@ SIMPLE_JWT = {
 
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = True  # For dev only
+CORS_ALLOW_ALL_ORIGINS = False  
+
+CORS_ALLOWED_ORIGINS = [
+    "https://app.eventory-marketplace.store"
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
