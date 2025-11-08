@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-fl37bb9_szkvuiph!gn&0(9%*tlg_%@57q4rtoqi-fw^)k0i$6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["api.eventory-marketplace.store", "127.0.0.1", "localhost"]
+
 
 
 import os
