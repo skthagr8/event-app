@@ -97,6 +97,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://app.eventory-marketplace.store"
 ]
 
+SECURE_SSL_REDIRECT = True
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
