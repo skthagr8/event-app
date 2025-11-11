@@ -25,8 +25,16 @@ SECRET_KEY = 'django-insecure-fl37bb9_szkvuiph!gn&0(9%*tlg_%@57q4rtoqi-fw^)k0i$6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["api.eventory-marketplace.store", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = []
 
+
+ALLOWED_HOSTS = [
+    'api.eventory-marketplace.store',   # your custom domain
+    'event-app-2-ykbk.onrender.com',    # Render default URL
+    "api.eventory-marketplace.store", 
+    "127.0.0.1", 
+    "localhost"
+]
 
 
 import os
@@ -134,12 +142,25 @@ WSGI_APPLICATION = 'event_marketplace.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        postgresql://eventory_db_user:Tf5VIeuiUvNBXLRvEsDDCv4KZyHjXX4k@dpg-d49pfb6uk2gs739ffqkg-a/eventory_db
     }
 }
+'''
+
+import os
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
+}
+
 
 
 # Password validation
