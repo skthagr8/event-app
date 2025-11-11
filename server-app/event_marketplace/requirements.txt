@@ -24,11 +24,6 @@ gunicorn==22.0.0
 rich==13.7.1
 tqdm==4.66.4
 
-# --- Data & ML (optional, comment out if not needed) ---
-numpy==1.26.4
-pandas==2.2.2
-scikit-learn==1.5.1
-matplotlib==3.9.1
 
 # --- Security & Crypto ---
 cryptography==42.0.8
