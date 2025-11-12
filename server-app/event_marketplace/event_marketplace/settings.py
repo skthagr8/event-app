@@ -25,9 +25,6 @@ SECRET_KEY = 'django-insecure-fl37bb9_szkvuiph!gn&0(9%*tlg_%@57q4rtoqi-fw^)k0i$6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 ALLOWED_HOSTS = [
     'api.eventory-marketplace.store',   # your custom domain
     'event-app-2-ykbk.onrender.com',    # Render default URL
