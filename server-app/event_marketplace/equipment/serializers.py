@@ -21,11 +21,10 @@ class EquipmentSerializer(serializers.ModelSerializer):
         model = Equipment
         fields = '__all__'
 
-'''
     def get_image_url(self, obj):
         if obj.image:
             return f"media/{obj.image.name.replace('\\', '/')}"
         return None
 
-'''
+
 
