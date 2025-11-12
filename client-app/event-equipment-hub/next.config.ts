@@ -1,24 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,    // recommended for catching potential bugs
-  output: "standalone",     // required for Render deployment
+  reactStrictMode: true,
+  output: "standalone",
 
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'pictures-kenya.jijistatic.com',
-        pathname: '/**', // allow all image paths
+        hostname: 'api.eventory-marketplace.store',
+        pathname: '/media/**', // allow all media paths
       },
     ],
     domains: [
-      'localhost', // only needed for local development
+      'localhost', // for local development
+      'api.eventory-marketplace.store', // allows plain <img> fallback if needed
     ],
   },
-
-  // If you ever deploy on a subpath (not root), uncomment these:
-  // basePath: "",
-  // assetPrefix: "",
 };
 
 export default nextConfig;
