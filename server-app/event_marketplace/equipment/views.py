@@ -18,7 +18,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class EquipmentViewSet(viewsets.ModelViewSet):
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
-    permission_classes = [IsAuthenticated]
+  #  permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = Equipment.objects.all()
