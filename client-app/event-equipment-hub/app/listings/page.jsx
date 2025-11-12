@@ -37,7 +37,6 @@ function ListingsPage() {
       const query = [];
       if (filters.category) query.push(`category=${filters.category}`);
       if (filters.maxPrice) query.push(`max_price=${filters.maxPrice}`);
-      // You could also send condition filter in the future
       if (query.length) url += `?${query.join('&')}`;
 
       try {
@@ -52,7 +51,7 @@ function ListingsPage() {
           // Robust image URL handling
           let imageUrl = item.image || '/placeholder.png';
           if (!imageUrl.startsWith('http')) {
-            imageUrl = imageUrl.replace(/^\/+/, ''); // Remove leading slash
+            imageUrl = imageUrl.replace(/^\/+/, ''); // remove leading slash
             imageUrl = `${API_BASE.replace(/\/api\/$/, '')}/${imageUrl}`;
           }
 
@@ -75,6 +74,7 @@ function ListingsPage() {
         setLoading(false);
       } catch (error) {
         console.error('Failed to fetch filtered equipment:', error);
+        setLoading(false);
       }
     }
 
