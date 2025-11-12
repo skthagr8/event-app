@@ -15,9 +15,11 @@ export default function PaymentStatusPage() {
     }
     console.log('Tracking ID:', trackingId);
 
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
     const checkStatus = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/payments/status/${trackingId}/`, {
+        const res = await fetch(`${API_BASE}payments/status/${trackingId}/`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,

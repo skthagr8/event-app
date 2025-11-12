@@ -19,6 +19,9 @@ export default function CategoryEquipments() {
   const params = useParams();
   const categoryId = params?.id;
 
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
+
   const [equipments, setEquipments] = useState([]);
   const [categoryName, setCategoryName] = useState('');
   const [loading, setLoading] = useState(true);
@@ -34,10 +37,10 @@ export default function CategoryEquipments() {
     const fetchData = async () => {
       try {
         const [equipRes, catRes] = await Promise.all([
-          axios.get(`http://localhost:8000/api/equipment/?category=${categoryId}`, {
+          axios.get(`${API_BASE}equipment/?category=${categoryId}`, {
             headers: token ? { Authorization: `Bearer ${token}` } : {},
           }),
-          axios.get(`http://localhost:8000/api/categories/${categoryId}/`, {
+          axios.get(`${API_BASE}categories/${categoryId}/`, {
             headers: token ? { Authorization: `Bearer ${token}` } : {},
           }),
         ]);

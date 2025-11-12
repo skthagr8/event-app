@@ -48,6 +48,9 @@ export default function CheckoutPage() {
 }, []);
 
 
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
+
   useEffect(() => {
     const fetchEquipment = async () => {
       try {
@@ -57,7 +60,7 @@ export default function CheckoutPage() {
           return;
         }
 
-        const res = await axios.get(`http://localhost:8000/api/equipment/${equipmentId}/`, {
+        const res = await axios.get(`${API_BASE}equipment/${equipmentId}/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setEquipment(res.data);

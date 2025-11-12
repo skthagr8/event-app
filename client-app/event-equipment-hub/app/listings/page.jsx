@@ -28,10 +28,13 @@ function ListingsPage() {
     budget: false,
   });
 
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
+
   useEffect(() => {
   async function fetchFilteredEquipment() {
     const token = localStorage.getItem('accessToken');
-    let url = `http://localhost:8000/api/equipment/`;
+    let url = `${API_BASE}equipment/`;
 
     const query = [];
     if (filters.category) query.push(`category=${filters.category}`);

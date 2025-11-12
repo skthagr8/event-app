@@ -11,24 +11,25 @@ export default function CategorySelectorPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-useEffect(() => {
-  const token = localStorage.getItem('accessToken');
-  if (!token) {
-    toast.error('You must be logged in to view categories');
-    setLoading(false);
-    return;
-  }
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
 
-  axios.get('http://localhost:8000/api/categories/', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then(res => setCategories(res.data))
-    .catch(() => toast.error('Failed to fetch categories'))
-    .finally(() => setLoading(false));
-}, []);
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      toast.error('You must be logged in to view categories');
+      setLoading(false);
+      return;
+    }
 
+    axios.get(`${API_BASE}categories/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => setCategories(res.data))
+      .catch(() => toast.error('Failed to fetch categories'))
+      .finally(() => setLoading(false));
+  }, [API_BASE]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,7 +40,9 @@ useEffect(() => {
   return (
     <Container className="mt-5">
       <h2>Select Equipment Category</h2>
-      {loading ? <Spinner animation="border" /> : (
+      {loading ? (
+        <Spinner animation="border" />
+      ) : (
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="categorySelect" className="mb-3">
             <Form.Label>Choose a category:</Form.Label>

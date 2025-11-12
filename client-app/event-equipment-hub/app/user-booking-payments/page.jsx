@@ -20,7 +20,10 @@ export default function UserBookingPayments() {
       return;
     }
 
-    axios.get('http://localhost:8000/api/payments/user-booking-payments/', {
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
+
+    axios.get(`${API_BASE}payments/user-booking-payments/`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then(res => setPayments(res.data))

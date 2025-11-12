@@ -26,10 +26,13 @@ function LoginForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/login/', formData, {
+      const response = await axios.post(`${API_BASE}login/`, formData, {
         headers: {
         'Content-Type': 'application/json',
         },

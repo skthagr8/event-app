@@ -10,6 +10,9 @@ export default function UserPurchases() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
+
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     const user = JSON.parse(localStorage.getItem('user'));
@@ -20,7 +23,7 @@ export default function UserPurchases() {
       return;
     }
 
-    axios.get('http://localhost:8000/api/payments/user-purchases/', {
+    axios.get(`${API_BASE}payments/user-purchases/`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then(res => setPurchases(res.data))

@@ -21,12 +21,13 @@ function CheckoutForm({ isOpen, onClose, onSubmit, equipment }) {
       alert('Please select both start and end dates');
       return;
     }
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
 
     const accessToken = localStorage.getItem('accessToken');
 
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/bookings/',
+        `${API_BASE}bookings/`,
         {
           equipment: equipment.id,
           quantity,

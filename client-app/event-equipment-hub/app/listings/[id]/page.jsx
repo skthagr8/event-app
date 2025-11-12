@@ -21,13 +21,16 @@ function EquipmentDetailsPage() {
   const [showForm, setShowForm] = useState(false);
   const user = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : null;
 
+
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
   useEffect(() => {
     if (!id) return;
 
     async function fetchEquipment() {
       const token = localStorage.getItem('accessToken');
       try {
-        const res = await fetch(`http://localhost:8000/api/equipment/${id}/`, 
+        const res = await fetch(`${API_BASE}equipment/${id}/`, 
         {
         headers: {
           'Authorization': `Bearer ${token}`,

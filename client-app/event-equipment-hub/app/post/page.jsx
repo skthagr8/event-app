@@ -8,6 +8,8 @@ import { Poppins as popps } from 'next/font/google';
 
 const poppins = popps({ subsets: ['latin'], weight: '400', style: 'normal' });
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
 export default function EquipmentPostPage() {
   const [form, setForm] = useState({
     name: '',
@@ -44,7 +46,7 @@ export default function EquipmentPostPage() {
 
   const fetchCategories = async () => {
     try {
-      const res = await api.get('http://localhost:8000/api/categories/');
+      const res = await api.get(`${API_BASE}categories/`);
       setCategories(res.data);
     } catch (err) {
       toast.error('Failed to load categories');

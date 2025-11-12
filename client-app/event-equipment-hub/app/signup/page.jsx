@@ -28,10 +28,12 @@ function SignupForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://api.eventory-marketplace.store/api/signup/', formData);
+      const res = await axios.post(`${API_BASE}signup/`, formData);
 
       if (res.status === 201 || res.status === 200) {
         const { access, refresh, ...userData } = res.data;s

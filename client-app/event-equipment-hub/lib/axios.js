@@ -1,8 +1,11 @@
 // lib/axios.js
 import axios from 'axios';
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
 
+
+const baseURL = API_BASE;
+  
 const api = axios.create({ baseURL });
 
 api.interceptors.request.use(

@@ -6,7 +6,10 @@ import Link from 'next/link';
 
 export default function EquipmentCard({ 
   id, title, price, rent_per_day, location, condition, is_premium, quantity, image_url
-}) {
+})
+ {
+
+  
   return (
     <Card style={{ maxWidth: '20rem' }}>
       <div

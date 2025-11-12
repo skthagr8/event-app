@@ -18,6 +18,7 @@ export default function MyListingsPage() {
   const router = useRouter();
   const user = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : null;
   
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
 
   useEffect(() => {
     if (!user || user.role !== 'vendor') {
@@ -31,7 +32,7 @@ export default function MyListingsPage() {
   const fetchListings = async () => {
     setLoading(true);
     try {
-      const res = await api.get('http://localhost:8000/api/equipment/my-listings/');
+      const res = await api.get(`${API_BASE}equipment/my-listings/`);
       setListings(res.data);
       toast.success('Listings loaded');
     } catch (err) {

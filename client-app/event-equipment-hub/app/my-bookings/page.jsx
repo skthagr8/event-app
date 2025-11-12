@@ -24,10 +24,12 @@ export default function MyBookingsPage() {
     fetchBookings();
   }, []);
 
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.eventory-marketplace.store/api/';
+
   const fetchBookings = async () => {
     setLoading(true);
     try {
-      const res = await api.get('/bookings/my-bookings/');
+      const res = await api.get(`${API_BASE}bookings/my-bookings/`);
       setBookings(res.data);
       toast.success('Bookings loaded');
     } catch {
