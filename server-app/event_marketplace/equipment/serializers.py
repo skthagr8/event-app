@@ -12,18 +12,16 @@ class EquipmentSerializer(serializers.ModelSerializer):
     is_premium = serializers.BooleanField()
     for_sale = serializers.BooleanField()
 
-    class Meta:
-        model = Equipment
-        fields = '__all__'
-        
     category = serializers.SlugRelatedField(
         slug_field='name',
         read_only=True
     )
 
-    def get_image_url(self, obj):
-        request = self.context.get('request')
-        if obj.image and request is not None:
-            return request.build_absolute_uri(obj.image.url)
-        return obj.image_url
+    class Meta:
+        model = Equipment
+        fields = '__all__'
 
+    def get_image_url(self, obj):
+        if obj.image:
+            return f"media/{obj.image.name}"  # relative path instead of absolute URL
+        return None
