@@ -23,5 +23,6 @@ class EquipmentSerializer(serializers.ModelSerializer):
 
     def get_image_url(self, obj):
         if obj.image:
-            return f"media/{obj.image.name}"  # relative path instead of absolute URL
+            return f"media/{obj.image.name.replace('\\', '/')}"
         return None
+
