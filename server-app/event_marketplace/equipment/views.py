@@ -26,6 +26,11 @@ class EquipmentViewSet(viewsets.ModelViewSet):
         if category:
             queryset = queryset.filter(category__name__iexact=category) or queryset.filter(category__id=category)
         return queryset
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request   # ✅ key fix
+        return context
  
 
     @transaction.atomic
