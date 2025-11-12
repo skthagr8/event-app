@@ -59,9 +59,9 @@ function ListingsPage() {
         is_premium: item.is_premium,
         quantity: Number(item.quantity),
         is_available: item.is_available,
-        image_url: item.image.startsWith('http')
-      ? item.image
-      : `https://api.eventory-marketplace.store/${item.image.replace('\\','/')}`,
+        image_url: item.image_url.startsWith('http')
+      ? item.image_url
+      : `https://api.eventory-marketplace.store/${item.image_url.replace('\\','/')}`,
         category: item.category,
         updated_at: item.updated_at,
       }));
