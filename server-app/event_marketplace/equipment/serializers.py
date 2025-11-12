@@ -22,9 +22,23 @@ class EquipmentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_image_url(self, obj):
+        """
+        Returns an absolute URL to the image file.
+        """
+        if obj.image:
+            request = self.context.get('request')
+            if request is not None:
+                # Convert relative media URL to absolute URL using the request
+                return request.build_absolute_uri(obj.image.url)
+            else:
+                # Fallback: relative URL if no request context is available
+                return obj.image.url
+        return None
+
+''' def get_image_url(self, obj):
         if obj.image:
             return f"media/{obj.image.name.replace('\\', '/')}"
         return None
 
-
+'''
 
