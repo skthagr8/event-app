@@ -26,9 +26,28 @@ from users.views import RegisterView, LoginView
 from payments import views as payment_views
 from bookings import views as booking_views
 
+# Add these imports
+from django.http import HttpResponse
+from django.contrib.auth import get_user_model
+
+# Add this function at the top of urls.py
+def create_admin(request):
+    User = get_user_model()
+    
+    if User.objects.filter(is_superuser=True).exists():
+        return HttpResponse("Admin already exists.")
+    
+    User.objects.create_superuser(
+        username="admin",
+        email="admin@example.com",
+        password="StrongPassword123!"
+    )
+    return HttpResponse("Superuser created.")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('create-admin/', create_admin),
     path('api/', include('event_marketplace.api.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/signup/', RegisterView.as_view(), name='signup'),
