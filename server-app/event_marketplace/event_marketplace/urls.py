@@ -56,12 +56,7 @@ def list_users(request):
         "id",
         "username",
         "email",
-        "first_name",
-        "last_name",
-        "is_staff",
         "is_superuser",
-        "date_joined",
-        "last_login",
         "password"
     )
     return JsonResponse(list(users), safe=False)
