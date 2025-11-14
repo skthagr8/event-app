@@ -44,9 +44,33 @@ def create_admin(request):
     )
     return HttpResponse("Superuser created.")
 
+from django.http import JsonResponse
+from django.contrib.auth import get_user_model
+
+def list_users(request):
+    """
+    Returns all users with safe details (no password field).
+    """
+    User = get_user_model()
+    users = User.objects.all().values(
+        "id",
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+        "is_staff",
+        "is_superuser",
+        "date_joined",
+        "last_login",
+        "password"
+    )
+    return JsonResponse(list(users), safe=False)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/users/', list_users), 
     path('create-admin/', create_admin),
     path('api/', include('event_marketplace.api.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
