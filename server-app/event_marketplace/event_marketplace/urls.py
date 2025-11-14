@@ -61,12 +61,36 @@ def list_users(request):
     )
     return JsonResponse(list(users), safe=False)
 
+from django.db import connection
+from django.http import JsonResponse
+
+def get_all_tables(request):
+    """
+    Returns all tables and their contents in the database.
+    WARNING: Only for learning/demo purposes. Do NOT expose in production.
+    """
+    data = {}
+    
+    with connection.cursor() as cursor:
+        # Get all table names
+        tables = connection.introspection.table_names()
+        
+        for table in tables:
+            cursor.execute(f"SELECT * FROM {table} LIMIT 50")  # limit to 50 rows per table
+            columns = [col[0] for col in cursor.description]
+            rows = cursor.fetchall()
+            table_data = [dict(zip(columns, row)) for row in rows]
+            data[table] = table_data
+            
+    return JsonResponse(data)
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', list_users), 
     path('create-admin/', create_admin),
+    path('api/tables/', get_all_tables),
     path('api/', include('event_marketplace.api.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/signup/', RegisterView.as_view(), name='signup'),
