@@ -34,8 +34,8 @@ from django.contrib.auth import get_user_model
 def create_admin(request):
     User = get_user_model()
     
-    if User.objects.filter(is_superuser=True).exists():
-        return HttpResponse("Admin already exists.")
+    if User.objects.filter(email="joelembiid@gmail.com").exists():
+        return HttpResponse("Admin with that email already exists.")
     
     User.objects.create_superuser(
         username="joelembiid",
